@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="2464715398">
+    <data-source source="LOCAL" name="MySQL - @localhost" uuid="f5716e57-9da6-4c0e-93db-2d47bdb81ec2">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfdedfd8dfd3</user-password>
+      <schema-pattern>food.*</schema-pattern>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+      </driver-properties>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="hibernate.cfg.xml" uuid="c98fb9c8-b01d-4b8a-8e1e-f47a8b9550d1">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfdedfd8dfd3</user-password>
+      <libraries>
+        <library>
+          <url>file://C:\Users\JUSTIN\IdeaProjects\queue_0600_space\lib\hamcrest-core-1.3.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
+

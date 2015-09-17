@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="MySQL - @localhost" uuid="f5716e57-9da6-4c0e-93db-2d47bdb81ec2">
+    <database-info product="MySQL" version="5.0.27-community-nt" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="food"/>
+    <table name="_business" schema="" catalog="food" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="password" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="_comments" schema="" catalog="food" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="stars" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="comments" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="user" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="restaurant" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93" def="Jyc="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_comment_restaurant" columns="restaurant" ref-table="_restaurant" ref-schema="" ref-catalog="food" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_comment_user" columns="user" ref-table="_user" ref-schema="" ref-catalog="food" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_comment_restaurant" unique="false" columns="restaurant"/>
+      <index name="fk_comment_user" unique="false" columns="user"/>
+    </table>
+    <table name="_dishkind" schema="" catalog="food" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FK_1bk0082t1b2835m8tptfx2urx" table="menu_dishkind" schema="" catalog="food" columns="dishkind_id"/>
+    </table>
+    <table name="_menu" schema="" catalog="food" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="restaurant" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="dish" sqlType="VARCHAR" precision="16" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="price" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="img" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_restmenu" columns="restaurant" ref-table="_restaurant" ref-schema="" ref-catalog="food" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_kovdeshch6xh9gyfe6cg54xrg" table="menu_dishkind" schema="" catalog="food" columns="menu_id"/>
+      <index name="fk_restmenu" unique="false" columns="restaurant"/>
+    </table>
+    <table name="_order" schema="" catalog="food" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="ordernumber" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="date" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <column name="state" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="desk" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="restaurant_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="note" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_86hdbx9qx18e4u4wtjvs72e6t" columns="user_id" ref-table="_user" ref-schema="" ref-catalog="food" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_m66b299kukjayknd6a4pvoxe8" columns="restaurant_id" ref-table="_restaurant" ref-schema="" ref-catalog="food" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_86hdbx9qx18e4u4wtjvs72e6t" unique="false" columns="user_id"/>
+      <index name="FK_m66b299kukjayknd6a4pvoxe8" unique="false" columns="restaurant_id"/>
+    </table>
+    <table name="_restaurant" schema="" catalog="food" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="number" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="name" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="TEL" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="address" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="consumption" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="stars" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="img" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="expected" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="recommendImg" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="recommendWord" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="tinyTable" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="middleTable" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="bigTable" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="lognitude" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="latitude" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_comment_restaurant" table="_comments" schema="" catalog="food" columns="restaurant"/>
+      <exported-key name="fk_restmenu" table="_menu" schema="" catalog="food" columns="restaurant"/>
+      <exported-key name="FK_m66b299kukjayknd6a4pvoxe8" table="_order" schema="" catalog="food" columns="restaurant_id"/>
+      <exported-key name="FK_fxnm7697t1yk4gh83akdnuewu" table="user_favor" schema="" catalog="food" columns="restaurant_id"/>
+    </table>
+    <table name="_user" schema="" catalog="food" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="usernumber" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="username" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="password" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="words" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="img" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="nickname" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <column name="favor" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_comment_user" table="_comments" schema="" catalog="food" columns="user"/>
+      <exported-key name="FK_86hdbx9qx18e4u4wtjvs72e6t" table="_order" schema="" catalog="food" columns="user_id"/>
+      <exported-key name="FK_takwvoh7tnak1uavwpd4u6q7i" table="user_favor" schema="" catalog="food" columns="user_id"/>
+    </table>
+    <table name="menu_dishkind" schema="" catalog="food" type="TABLE">
+      <column name="menu_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="dishkind_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="menu_id,dishkind_id"/>
+      <foreign-key name="FK_1bk0082t1b2835m8tptfx2urx" columns="dishkind_id" ref-table="_dishkind" ref-schema="" ref-catalog="food" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_kovdeshch6xh9gyfe6cg54xrg" columns="menu_id" ref-table="_menu" ref-schema="" ref-catalog="food" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_1bk0082t1b2835m8tptfx2urx" unique="false" columns="dishkind_id"/>
+      <index name="FK_kovdeshch6xh9gyfe6cg54xrg" unique="false" columns="menu_id"/>
+    </table>
+    <table name="user_favor" schema="" catalog="food" type="TABLE">
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="restaurant_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="user_id,restaurant_id"/>
+      <foreign-key name="FK_fxnm7697t1yk4gh83akdnuewu" columns="restaurant_id" ref-table="_restaurant" ref-schema="" ref-catalog="food" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_takwvoh7tnak1uavwpd4u6q7i" columns="user_id" ref-table="_user" ref-schema="" ref-catalog="food" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_fxnm7697t1yk4gh83akdnuewu" unique="false" columns="restaurant_id"/>
+      <index name="FK_takwvoh7tnak1uavwpd4u6q7i" unique="false" columns="user_id"/>
+    </table>
+  </data-source>
+  <data-source source="LOCAL" name="hibernate.cfg.xml" uuid="c98fb9c8-b01d-4b8a-8e1e-f47a8b9550d1">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  </data-source>
+</component>

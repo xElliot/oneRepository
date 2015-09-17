@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+    <!-- 导入资源文件 -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!-- 配置 C3P0 数据源 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="${jdbc.user}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+        <property name="driverClass" value="${jdbc.driverClass}"></property>
+        <property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+
+        <property name="initialPoolSize" value="${jdbc.initPoolSize}"></property>
+        <property name="maxPoolSize" value="${jdbc.maxPoolSize}"></property>
+    </bean>
+
+    <!-- 配置 SessionFactory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+        <property name="mappingLocations">
+            <list>
+                <value>classpath:com/queue/model/Comments.hbm.xml</value>
+
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306</prop>
+                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+                <prop key="hibernate.connection.username">root</prop>
+                <prop key="hibernate.connection.password">try</prop>
+            </props>
+        </property>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.queue.model.Order</value>
+                <value>com.queue.model.Menu</value>
+                <value>com.queue.model.DishKind</value>
+                <value>com.queue.model.User</value>
+                <value>com.queue.model.Restaurant</value>
+                <value>com.queue.model.Business</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <context:component-scan base-package="com.queue"/>
+    <!-- 配置beans -->
+    <bean id="userDao" class="com.queue.dao.UserDao">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <bean id="userService" class="com.queue.service.UserService">
+        <property name="userDao" ref="userDao"></property>
+    </bean>
+    <bean id="userAction" class="com.queue.action.UserAction" scope="prototype">
+        <property name="userService" ref="userService"></property>
+
+    </bean>
+
+    <bean id="restaurantDao" class="com.queue.dao.RestaurantDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="restaurantService" class="com.queue.service.RestaurantService">
+        <property name="restaurantDao" ref="restaurantDao"/>
+    </bean>
+    <bean id="restaurantAction" class="com.queue.action.RestaurantAction" scope="prototype">
+        <property name="restaurantService" ref="restaurantService"></property>
+    </bean>
+
+    <!-- 配置 Spring 的声明式事务 -->
+    <!-- 1. 配置 hibernate 的事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+    <!-- 2. 配置事务属性 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="checkLogin" read-only="true"/>
+            <tx:method name="loginNotYet" read-only="true"/>
+            <tx:method name="loginAlready" read-only="true"/>
+            <tx:method name="imgTELAddressCommentsOfThisRestaurant" read-only="true"/>
+            <tx:method name="getRecommendMenu" read-only="true"/>
+            <tx:method name="exists" read-only="true"/>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 3. 配置事务切入点, 再把事务属性和事务切入点关联起来 -->
+    <aop:config>
+        <aop:pointcut expression="execution(* com.queue.service.*.*(..))" id="txPointcut"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>
+</beans>
